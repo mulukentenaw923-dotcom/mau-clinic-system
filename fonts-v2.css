@@ -1,0 +1,37 @@
+/*
+ * Schibsted Grotesk variable font family and Inter symbol fallback - local hosting only.
+ * `/static/*` is cached for a year (see `_headers`), so rename this file whenever it changes or returning visitors
+ * keep the old faces. Update root.tsx, public/maintenance.html and .storybook/preview-head.html with it.
+ */
+
+@font-face {
+  font-family: 'Schibsted Grotesk';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('./schibsted-grotesk.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Schibsted Grotesk';
+  font-style: italic;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('./schibsted-grotesk-italic.woff2') format('woff2');
+}
+
+/*
+ * Inter variable (opsz pinned to 14) subset to Arrows and Misc Technical, which schibsted
+ * grotesk lacks. Covers keyboard shortcut glyphs such as ⌘ ⇧ ⌥ ⌃ ⏎ ⌫ ⎋, which Google's
+ * Inter subsets also drop. Regenerate from the rsms/inter release with fonttools:
+ * fonttools varLib.instancer InterVariable.woff2 opsz=14 -o instance.ttf
+ * pyftsubset instance.ttf --flavor=woff2 --with-zopfli --unicodes="U+2190-21FF,U+2300-23FF" --layout-features='*'
+ */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('./inter-symbols.woff2') format('woff2');
+  unicode-range: U+2190-21FF, U+2300-23FF;
+}
