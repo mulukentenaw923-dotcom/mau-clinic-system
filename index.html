@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html lang="en">
   <head>
@@ -11,5 +12,686 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+=======
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MAU Clinic Management System</title>
+    <style>
+      :root {
+        --bg: #081421;
+        --panel: rgba(15, 23, 42, 0.9);
+        --panel-alt: #0f172a;
+        --line: rgba(148, 163, 184, 0.18);
+        --text: #edf6ff;
+        --muted: #a5b4cf;
+        --green: #22c55e;
+        --blue: #38bdf8;
+        --amber: #f59e0b;
+        --purple: #a78bfa;
+        --red: #f87171;
+      }
+
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; font-family: Inter, Arial, sans-serif; background: radial-gradient(circle at top, #102a43, var(--bg) 55%); color: var(--text); }
+      body { min-height: 100vh; }
+      button, input { font: inherit; }
+      button { cursor: pointer; }
+
+      .login-shell {
+        min-height: 100vh; display: grid; place-items: center; padding: 24px;
+      }
+      .welcome-card {
+        width: min(760px, 100%); background: var(--panel); border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 22px 60px rgba(2, 6, 23, 0.8); padding: 48px 32px; text-align: center;
+      }
+      .welcome-card h1 { margin: 0; font-size: clamp(2rem, 5vw, 3.5rem); }
+      .welcome-card p { margin: 14px 0; color: var(--muted); font-size: 1.1rem; }
+      .welcome-card .demo-note { margin: 0 0 28px; font-size: 0.9rem; }
+      .welcome-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+      .welcome-button {
+        background: linear-gradient(135deg, var(--green), var(--blue)); color: white; border: none; border-radius: 12px; padding: 14px 24px; font-weight: 700;
+      }
+      .demo-button {
+        background: rgba(56, 189, 248, 0.12); color: #bae6fd; border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 12px; padding: 14px 24px; font-weight: 700;
+      }
+      .login-card {
+        width: min(460px, 100%); background: var(--panel); border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 22px 60px rgba(2, 6, 23, 0.8); padding: 32px;
+      }
+      .brand { text-align: center; margin-bottom: 24px; }
+      .brand-badge {
+        width: 72px; height: 72px; margin: 0 auto 16px; border-radius: 18px; display: grid; place-items: center; background: linear-gradient(135deg, var(--green), var(--blue)); color: white; font-weight: 800; font-size: 1.5rem;
+      }
+      .brand h1 { margin: 0; font-size: clamp(1.8rem, 2vw, 2.8rem); }
+      .brand p { margin: 8px 0 0; color: var(--muted); }
+
+      .login-form { display: flex; flex-direction: column; gap: 18px; }
+      .role-grid { display: grid; grid-template-columns: repeat(2, minmax(180px, 1fr)); gap: 14px; }
+      .role-button {
+        border: 1px solid var(--line); background: rgba(15, 23, 42, 0.8); color: var(--text); padding: 14px 16px; border-radius: 14px; display: flex; flex-direction: column; text-align: left; gap: 6px; transition: 0.2s ease;
+      }
+      .role-button.selected {
+        border-color: rgba(45, 212, 191, 0.9); box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.6); background: rgba(12, 74, 110, 0.75);
+      }
+      .role-button strong { font-size: 1rem; }
+      .role-button span { color: var(--muted); font-size: 0.82rem; }
+      .login-form label { display: flex; flex-direction: column; gap: 8px; font-weight: 600; }
+      .login-form input {
+        border: 1px solid var(--line); background: rgba(15, 23, 42, 0.72); color: white; border-radius: 12px; padding: 12px 14px; outline: none;
+      }
+      .login-form input:focus { border-color: rgba(96, 165, 250, 0.9); box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.4); }
+      .error-box { background: rgba(127, 29, 29, 0.5); border: 1px solid rgba(248, 113, 113, 0.5); color: #fecaca; border-radius: 10px; padding: 10px 12px; }
+      .primary-button {
+        background: linear-gradient(135deg, var(--green), var(--blue)); color: white; border: none; border-radius: 12px; padding: 14px 18px; font-weight: 700;
+      }
+      .back-button { background: transparent; color: var(--muted); border: none; padding: 8px; }
+
+      .app-shell { display: flex; min-height: 100vh; background: #0b1220; }
+      .sidebar {
+        width: 240px; background: var(--panel-alt); border-right: 1px solid var(--line); padding: 24px 16px; display: flex; flex-direction: column; gap: 20px;
+      }
+      .sidebar-brand { font-size: 1.4rem; font-weight: 800; }
+      .nav-item {
+        display: block; width: 100%; background: transparent; color: #cbd5e1; text-align: left; padding: 12px 14px; border-radius: 10px; border: none; font-weight: 600; margin-bottom: 8px;
+      }
+      .nav-item.active { background: rgba(59, 130, 246, 0.2); color: white; }
+      .logout-button {
+        margin-top: auto; background: rgba(239, 68, 68, 0.12); color: #fecaca; border: none; border-radius: 10px; padding: 12px 14px; font-weight: 700;
+      }
+      .content-panel { flex: 1; padding: 28px; }
+      .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+      .eyebrow { color: #7dd3fc; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; }
+      .topbar h2 { margin: 8px 0 0; font-size: clamp(1.8rem, 2vw, 2.5rem); }
+      .user-pill {
+        background: rgba(14, 165, 233, 0.12); border: 1px solid rgba(14, 165, 233, 0.25); color: #bae6fd; border-radius: 999px; padding: 8px 12px;
+      }
+      .quick-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+      .action-chip {
+        background: rgba(15, 23, 42, 0.8); border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; color: #cbd5e1;
+      }
+      .stats-grid { display: grid; grid-template-columns: repeat(4, minmax(150px, 1fr)); gap: 18px; margin-bottom: 24px; }
+      .stat-card {
+        background: rgba(15, 23, 42, 0.8); border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px;
+      }
+      .stat-card span { color: var(--muted); font-size: 0.8rem; }
+      .stat-card strong { font-size: 1.8rem; line-height: 1; }
+      .stat-card.blue { border-top: 3px solid var(--blue); }
+      .stat-card.green { border-top: 3px solid var(--green); }
+      .stat-card.amber { border-top: 3px solid var(--amber); }
+      .stat-card.purple { border-top: 3px solid var(--purple); }
+      .panel {
+        background: rgba(15, 23, 42, 0.8); border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px;
+      }
+      .split-panel { display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; }
+      .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+      .small-button, .mini-button {
+        background: rgba(96, 165, 250, 0.15); color: #dbeafe; border: none; border-radius: 10px; padding: 8px 12px; 
+      }
+      table { width: 100%; border-collapse: collapse; }
+      th, td { border-bottom: 1px solid rgba(148, 163, 184, 0.1); padding: 12px 10px; text-align: left; }
+      th { color: #9fb1c9; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; }
+      .status-badge {
+        display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 700;
+      }
+      .status-badge.waiting { background: rgba(245, 158, 11, 0.12); color: #fbbf24; }
+      .status-badge.in-consultation { background: rgba(59, 130, 246, 0.12); color: #93c5fd; }
+      .status-badge.admitted { background: rgba(34, 197, 94, 0.12); color: #86efac; }
+      .toolbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+      .search-input, .dialog-form input, .dialog-form select, .dialog-form textarea {
+        width: 100%; border: 1px solid var(--line); background: rgba(15, 23, 42, 0.9); color: var(--text); border-radius: 10px; padding: 10px 12px;
+      }
+      .search-input { max-width: 280px; }
+      .dialog-backdrop {
+        position: fixed; inset: 0; z-index: 5; display: grid; place-items: center; padding: 20px; background: rgba(2, 6, 23, 0.78);
+      }
+      .dialog { width: min(520px, 100%); max-height: 90vh; overflow-y: auto; background: #0f172a; border: 1px solid var(--line); border-radius: 18px; padding: 22px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5); }
+      .dialog h3 { margin: 0 0 18px; }
+      .dialog-form { display: grid; gap: 14px; }
+      .dialog-form label { display: grid; gap: 7px; color: var(--muted); font-size: 0.9rem; }
+      .dialog-form textarea { min-height: 90px; resize: vertical; }
+      .dialog-actions { display: flex; justify-content: flex-end; gap: 10px; }
+      .cancel-button { background: transparent; border: 1px solid var(--line); color: var(--text); border-radius: 10px; padding: 10px 14px; }
+      .empty-state { color: var(--muted); text-align: center; padding: 18px; }
+      .toast { position: fixed; right: 20px; bottom: 20px; z-index: 8; max-width: min(420px, calc(100vw - 40px)); background: #064e3b; color: #d1fae5; border: 1px solid rgba(52, 211, 153, 0.4); border-radius: 12px; padding: 12px 16px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35); }
+      .toast.error { background: #7f1d1d; color: #fee2e2; border-color: rgba(248, 113, 113, 0.5); }
+
+      @media (max-width: 760px) {
+        .stats-grid, .split-panel { grid-template-columns: 1fr; }
+        .app-shell { flex-direction: column; }
+        .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--line); }
+        .topbar { flex-direction: column; align-items: flex-start; gap: 12px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      const roles = [
+        { id: 'cardroom', label: 'Card Room', description: 'Patient registration and search' },
+        { id: 'doctor', label: 'Doctor', description: 'Queue and consultations' },
+        { id: 'pharmacy', label: 'Pharmacy', description: 'Prescriptions and inventory' },
+        { id: 'admin', label: 'Admin', description: 'Reports and staff management' }
+      ];
+
+      const patients = [
+        { id: 'P-1001', name: 'Selam Bekele', age: 25, department: 'General', status: 'Waiting' },
+        { id: 'P-1002', name: 'Abebe Tadesse', age: 38, department: 'Cardiology', status: 'In Consultation' },
+        { id: 'P-1003', name: 'Hawi Alemu', age: 31, department: 'Orthopedics', status: 'Admitted' },
+        { id: 'P-1004', name: 'Daniel Bekele', age: 45, department: 'Dental', status: 'Waiting' }
+      ];
+
+      const queue = [
+        { id: 'Q-001', patient: 'Selam Bekele', doctor: 'Dr. Mulu', time: '09:00 AM' },
+        { id: 'Q-002', patient: 'Mekdes Alem', doctor: 'Dr. Daniel', time: '09:15 AM' },
+        { id: 'Q-003', patient: 'Abebe Tadesse', doctor: 'Dr. Mulu', time: '09:30 AM' }
+      ];
+
+      const prescriptions = [
+        { id: 'RX-204', patient: 'Selam Bekele', medicine: 'Amoxicillin 500mg', status: 'Pending' },
+        { id: 'RX-205', patient: 'Hawi Alemu', medicine: 'Ibuprofen 200mg', status: 'Ready' },
+        { id: 'RX-206', patient: 'Abebe Tadesse', medicine: 'Paracetamol', status: 'Dispensed' }
+      ];
+
+      const inventory = [
+        { item: 'Amoxicillin 500mg', stock: 84, reorderLevel: 20 },
+        { item: 'Ibuprofen 200mg', stock: 52, reorderLevel: 25 },
+        { item: 'Paracetamol', stock: 37, reorderLevel: 15 },
+        { item: 'Insulin', stock: 19, reorderLevel: 20 }
+      ];
+
+      const staff = [
+        { name: 'Aster Bekele', role: 'Nurse', status: 'On Duty' },
+        { name: 'Kebede Yitbarek', role: 'Doctor', status: 'Consulting' },
+        { name: 'Samuel Asfaw', role: 'Pharmacist', status: 'Available' },
+        { name: 'Meron Alemu', role: 'Admin', status: 'On Duty' }
+      ];
+
+      function doctorDisplayName(name) {
+        const trimmedName = name.trim();
+        return /^dr\.?\s/i.test(trimmedName) ? trimmedName : `Dr. ${trimmedName}`;
+      }
+
+      const doctors = [...new Set([
+        ...queue.map(item => item.doctor),
+        ...staff.filter(member => member.role === 'Doctor').map(member => doctorDisplayName(member.name))
+      ])];
+
+      const app = document.getElementById('app');
+      let selectedRole = 'cardroom';
+      let demoMode = false;
+      const consultations = [];
+
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, character => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        })[character]);
+      }
+
+      function showToast(message, isError = false) {
+        document.querySelector('.toast')?.remove();
+        const toast = document.createElement('div');
+        toast.className = `toast${isError ? ' error' : ''}`;
+        toast.setAttribute('role', 'status');
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        window.setTimeout(() => toast.remove(), 3500);
+      }
+
+      function openDialog(title, fields, onSave) {
+        const backdrop = document.createElement('div');
+        backdrop.className = 'dialog-backdrop';
+        backdrop.innerHTML = `
+          <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+            <h3 id="dialogTitle">${escapeHtml(title)}</h3>
+            <form class="dialog-form">
+              ${fields}
+              <div class="dialog-actions">
+                <button type="button" class="cancel-button" data-cancel>Cancel</button>
+                <button type="submit" class="small-button">Save</button>
+              </div>
+            </form>
+          </section>
+        `;
+        document.body.appendChild(backdrop);
+        const close = () => backdrop.remove();
+        backdrop.querySelector('[data-cancel]').addEventListener('click', close);
+        backdrop.addEventListener('click', event => {
+          if (event.target === backdrop) close();
+        });
+        backdrop.querySelector('form').addEventListener('submit', event => {
+          event.preventDefault();
+          const values = Object.fromEntries(new FormData(event.currentTarget).entries());
+          if (onSave(values) !== false) close();
+        });
+        backdrop.querySelector('input, select, textarea')?.focus();
+      }
+
+      function renderWelcome() {
+        app.innerHTML = `
+          <main class="login-shell">
+            <section class="welcome-card">
+              <div class="brand-badge">MAU</div>
+              <h1>Welcome to Mekdela Amba University</h1>
+              <p>Clinic Management System</p>
+              <p class="demo-note">You can explore the demo without an account. Demo content uses sample data only.</p>
+              <div class="welcome-actions">
+                <button type="button" class="welcome-button" id="continueToLogin">Continue to Login</button>
+                <button type="button" class="demo-button" id="enterDemo">Enter Demo Without Account</button>
+              </div>
+            </section>
+          </main>
+        `;
+
+        app.querySelector('#continueToLogin').addEventListener('click', renderLogin);
+        app.querySelector('#enterDemo').addEventListener('click', () => {
+          demoMode = true;
+          renderDashboard();
+        });
+      }
+
+      function cardMarkup(label, value, tone) {
+        return `
+          <div class="stat-card ${tone}">
+            <span>${label}</span>
+            <strong>${value}</strong>
+          </div>
+        `;
+      }
+
+      function renderLogin() {
+        app.innerHTML = `
+          <div class="login-shell">
+            <div class="login-card">
+              <div class="brand">
+                <h1>Welcome to Mekdela Amba University</h1>
+                <p>Clinic Management System</p>
+              </div>
+
+              <form id="loginForm" class="login-form">
+                <label>
+                  Email
+                  <input type="email" id="email" placeholder="user@mau.edu.et" autocomplete="username" required />
+                </label>
+
+                <label>
+                  Password
+                  <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password" required />
+                </label>
+
+                <div id="errorBox" class="error-box" style="display:none"></div>
+
+                <button type="submit" class="primary-button">Sign in</button>
+                <button type="button" class="back-button" id="backToWelcome">Back</button>
+              </form>
+            </div>
+          </div>
+        `;
+
+        app.querySelector('#backToWelcome').addEventListener('click', renderWelcome);
+
+        app.querySelector('#loginForm').addEventListener('submit', (event) => {
+          event.preventDefault();
+          const email = document.getElementById('email').value.trim();
+          const password = document.getElementById('password').value;
+
+          if (!email || !password) {
+            const errorBox = document.getElementById('errorBox');
+            errorBox.textContent = 'Enter your email and password to continue.';
+            errorBox.style.display = 'block';
+            return;
+          }
+
+          demoMode = true;
+          renderDashboard();
+        });
+      }
+
+      function renderDashboard() {
+        const shortcuts = {
+          cardroom: ['Register Patient', 'Patient Search', 'Queue'],
+          doctor: ['Pending Cases', 'Consultation', 'Prescription'],
+          pharmacy: ['Prescription Queue', 'Inventory', 'Stock'],
+          admin: ['Overview', 'Staff', 'Reports']
+        };
+
+        const navItems = [
+          { path: 'cardroom', label: 'Card Room' },
+          { path: 'doctor', label: 'Doctor' },
+          { path: 'pharmacy', label: 'Pharmacy' },
+          { path: 'admin', label: 'Admin' }
+        ];
+
+        const content = {
+          cardroom: `
+            <div class="stats-grid">
+              ${cardMarkup('Total Patients', (1240 + patients.length - 4).toLocaleString(), 'blue')}
+              ${cardMarkup('New Today', 32 + patients.length - 4, 'green')}
+              ${cardMarkup('Pending Review', patients.filter(patient => patient.status === 'Waiting').length, 'amber')}
+              ${cardMarkup('Discharged', '86', 'purple')}
+            </div>
+            <section class="panel">
+              <div class="panel-header">
+                <h3>Recent Patients</h3>
+                <div class="toolbar">
+                  <input class="search-input" id="patientSearch" type="search" placeholder="Search patients" aria-label="Search patients" />
+                  <button type="button" class="small-button" id="registerPatient">Register Patient</button>
+                </div>
+              </div>
+              <table>
+                <thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Department</th><th>Status</th></tr></thead>
+                <tbody id="patientRows">
+                  ${patients.map(p => `
+                    <tr>
+                      <td>${escapeHtml(p.id)}</td><td>${escapeHtml(p.name)}</td><td>${escapeHtml(p.age)}</td><td>${escapeHtml(p.department)}</td>
+                      <td><span class="status-badge ${escapeHtml(p.status.toLowerCase().replace(/\s+/g, '-'))}">${escapeHtml(p.status)}</span></td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+              <p class="empty-state" id="noPatientsFound" hidden>No matching patients found.</p>
+            </section>
+          `,
+          doctor: `
+            <div class="stats-grid">
+              ${cardMarkup('Today Queue', queue.length + 23, 'blue')}
+              ${cardMarkup('Consulted', consultations.length + 18, 'green')}
+              ${cardMarkup('Pending', queue.length, 'amber')}
+            </div>
+            <section class="panel">
+              <div class="panel-header">
+                <h3>Queue</h3>
+                <span class="action-chip">Select a patient to record a consultation</span>
+              </div>
+              <table>
+                <thead><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Time</th><th>Action</th></tr></thead>
+                <tbody id="doctorQueueRows">
+                  ${queue.map(q => `
+                    <tr>
+                      <td>${escapeHtml(q.id)}</td><td>${escapeHtml(q.patient)}</td><td>${escapeHtml(q.doctor)}</td><td>${escapeHtml(q.time)}</td>
+                      <td><button type="button" class="mini-button" data-review-id="${escapeHtml(q.id)}">Review</button></td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+              ${queue.length ? '' : '<p class="empty-state">No patients are waiting in the queue.</p>'}
+            </section>
+            ${consultations.length ? `
+              <section class="panel" style="margin-top:18px">
+                <div class="panel-header"><h3>Recent Consultations</h3></div>
+                <table>
+                  <thead><tr><th>Patient</th><th>Diagnosis</th><th>Notes</th></tr></thead>
+                  <tbody>${consultations.slice().reverse().map(item => `
+                    <tr><td>${escapeHtml(item.patient)}</td><td>${escapeHtml(item.diagnosis)}</td><td>${escapeHtml(item.notes || '—')}</td></tr>
+                  `).join('')}</tbody>
+                </table>
+              </section>
+            ` : ''}
+          `,
+          pharmacy: `
+            <div class="stats-grid">
+              ${cardMarkup('Pending Rx', prescriptions.filter(item => item.status !== 'Dispensed').length, 'amber')}
+              ${cardMarkup('Dispensed', prescriptions.filter(item => item.status === 'Dispensed').length, 'green')}
+              ${cardMarkup('Low Stock', inventory.filter(item => item.stock <= item.reorderLevel).length, 'purple')}
+            </div>
+            <section class="panel split-panel">
+              <div>
+                <div class="panel-header"><h3>Prescription Queue</h3></div>
+                <table>
+                  <thead><tr><th>ID</th><th>Patient</th><th>Medicine</th><th>Status</th><th>Action</th></tr></thead>
+                  <tbody>
+                    ${prescriptions.map(p => `
+                      <tr>
+                        <td>${escapeHtml(p.id)}</td><td>${escapeHtml(p.patient)}</td><td>${escapeHtml(p.medicine)}</td><td>${escapeHtml(p.status)}</td>
+                        <td>${p.status === 'Dispensed' ? '—' : `<button type="button" class="mini-button" data-dispense-id="${escapeHtml(p.id)}">Dispense</button>`}</td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <div class="panel-header"><h3>Inventory</h3></div>
+                <table>
+                  <thead><tr><th>Item</th><th>Stock</th><th>Reorder</th></tr></thead>
+                  <tbody>
+                    ${inventory.map(item => `
+                      <tr><td>${escapeHtml(item.item)}</td><td>${item.stock}</td><td>${item.reorderLevel}</td></tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          `,
+          admin: `
+            <div class="stats-grid">
+              ${cardMarkup('Staff Active', '86', 'blue')}
+              ${cardMarkup('Revenue', '$14.2K', 'green')}
+              ${cardMarkup('Reports', '23', 'purple')}
+            </div>
+            <section class="panel">
+              <div class="panel-header">
+                <h3>Staff Management</h3>
+                <button type="button" class="small-button" id="addDoctor">Add Doctor</button>
+              </div>
+              <table>
+                <thead><tr><th>Name</th><th>Role</th><th>Status</th></tr></thead>
+                <tbody>
+                  ${staff.map(member => `
+                    <tr><td>${escapeHtml(member.name)}</td><td>${escapeHtml(member.role)}</td><td>${escapeHtml(member.status)}</td></tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </section>
+          `
+        };
+
+        app.innerHTML = `
+          <div class="app-shell">
+            <aside class="sidebar">
+              <div class="sidebar-brand">MAU Clinic</div>
+              <nav>
+                ${navItems.map(item => `
+                  <button type="button" class="nav-item ${selectedRole === item.path ? 'active' : ''}" data-role="${item.path}">${item.label}</button>
+                `).join('')}
+              </nav>
+              <button type="button" class="logout-button" id="logoutBtn">Logout</button>
+            </aside>
+
+            <main class="content-panel">
+              <header class="topbar">
+                <div>
+                  <span class="eyebrow">Overview</span>
+                  <h2>${roles.find(r => r.id === selectedRole)?.label || 'Dashboard'} Dashboard</h2>
+                </div>
+                <div class="user-pill">${demoMode ? 'Demo mode · sample data only' : 'System User'}</div>
+              </header>
+
+              <div class="quick-actions">
+                ${shortcuts[selectedRole].map(item => `<div class="action-chip">${item}</div>`).join('')}
+              </div>
+
+              ${content[selectedRole]}
+            </main>
+          </div>
+        `;
+
+        app.querySelectorAll('.nav-item').forEach(button => {
+          button.addEventListener('click', () => {
+            selectedRole = button.dataset.role;
+            renderDashboard();
+          });
+        });
+
+        app.querySelector('#registerPatient')?.addEventListener('click', () => {
+          openDialog('Register Patient', `
+            <label>Patient name<input name="name" required maxlength="100" /></label>
+            <label>Age<input name="age" type="number" min="0" max="130" required /></label>
+            <label>Department<input name="department" required maxlength="80" /></label>
+            <label>Assign doctor
+              <select name="doctor" required>
+                ${doctors.map(doctor => `<option value="${escapeHtml(doctor)}">${escapeHtml(doctor)}</option>`).join('')}
+              </select>
+            </label>
+          `, values => {
+            const name = String(values.name || '').trim();
+            const department = String(values.department || '').trim();
+            const doctor = String(values.doctor || '');
+            const age = Number(values.age);
+            if (!name || !department || !doctors.includes(doctor) || !Number.isInteger(age) || age < 0 || age > 130) {
+              showToast('Enter a patient name, valid age and department, and select a doctor.', true);
+              return false;
+            }
+
+            const nextPatientNumber = patients.reduce((max, patient) => {
+              const number = Number(patient.id.match(/^P-(\d+)$/)?.[1] || 0);
+              return Math.max(max, number);
+            }, 1000) + 1;
+            const patientId = `P-${nextPatientNumber}`;
+            patients.push({ id: patientId, name, age, department, status: 'Waiting' });
+            const queueNumber = queue.reduce((max, item) => {
+              const number = Number(item.id.match(/^Q-(\d+)$/)?.[1] || 0);
+              return Math.max(max, number);
+            }, 0) + 1;
+            queue.push({
+              id: `Q-${String(queueNumber).padStart(3, '0')}`,
+              patient: name,
+              doctor,
+              time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            });
+            renderDashboard();
+            showToast(`Patient ${patientId} registered and added to the doctor queue.`);
+          });
+        });
+
+        app.querySelector('#patientSearch')?.addEventListener('input', event => {
+          const query = event.currentTarget.value.trim().toLowerCase();
+          let visibleCount = 0;
+          app.querySelectorAll('#patientRows tr').forEach(row => {
+            const matches = row.textContent.toLowerCase().includes(query);
+            row.hidden = !matches;
+            if (matches) visibleCount += 1;
+          });
+          const emptyState = app.querySelector('#noPatientsFound');
+          emptyState.hidden = visibleCount > 0;
+        });
+
+        app.querySelectorAll('[data-review-id]').forEach(button => {
+          button.addEventListener('click', () => {
+            const queueItem = queue.find(item => item.id === button.dataset.reviewId);
+            if (!queueItem) {
+              showToast('This queue entry is no longer available.', true);
+              return;
+            }
+            const medicineOptions = inventory.map(item =>
+              `<option value="${escapeHtml(item.item)}">${escapeHtml(item.item)} (${item.stock} in stock)</option>`
+            ).join('');
+            openDialog(`Consultation: ${queueItem.patient}`, `
+              <label>Diagnosis<input name="diagnosis" required maxlength="160" /></label>
+              <label>Consultation notes<textarea name="notes" maxlength="1000"></textarea></label>
+              <label>Prescription (optional)
+                <select name="medicine">
+                  <option value="">No prescription</option>
+                  ${medicineOptions}
+                </select>
+              </label>
+            `, values => {
+              const diagnosis = String(values.diagnosis || '').trim();
+              const notes = String(values.notes || '').trim();
+              const medicine = String(values.medicine || '');
+              if (!diagnosis) {
+                showToast('Enter a diagnosis before saving the consultation.', true);
+                return false;
+              }
+              const queueIndex = queue.findIndex(item => item.id === queueItem.id);
+              if (queueIndex < 0) {
+                showToast('This queue entry is no longer available.', true);
+                return false;
+              }
+
+              consultations.push({ patient: queueItem.patient, diagnosis, notes });
+              const patient = patients.find(item => item.name === queueItem.patient);
+              if (patient) patient.status = 'Consulted';
+              queue.splice(queueIndex, 1);
+              if (medicine) {
+                const nextPrescriptionNumber = prescriptions.reduce((max, item) => {
+                  const number = Number(item.id.match(/^RX-(\d+)$/)?.[1] || 0);
+                  return Math.max(max, number);
+                }, 0) + 1;
+                prescriptions.push({
+                  id: `RX-${nextPrescriptionNumber}`,
+                  patient: queueItem.patient,
+                  medicine,
+                  status: 'Pending'
+                });
+              }
+              renderDashboard();
+              showToast(medicine ? 'Consultation saved and prescription sent to pharmacy.' : 'Consultation saved.');
+            });
+          });
+        });
+
+        app.querySelectorAll('[data-dispense-id]').forEach(button => {
+          button.addEventListener('click', () => {
+            const prescription = prescriptions.find(item => item.id === button.dataset.dispenseId);
+            if (!prescription || prescription.status === 'Dispensed') {
+              showToast('This prescription has already been dispensed or is unavailable.', true);
+              return;
+            }
+            const stockItem = inventory.find(item => item.item === prescription.medicine);
+            if (!stockItem) {
+              showToast(`No inventory record found for ${prescription.medicine}.`, true);
+              return;
+            }
+            if (stockItem.stock < 1) {
+              showToast(`Cannot dispense ${prescription.medicine}: stock is empty.`, true);
+              return;
+            }
+
+            stockItem.stock -= 1;
+            prescription.status = 'Dispensed';
+            renderDashboard();
+            showToast(`${prescription.medicine} dispensed for ${prescription.patient}.`);
+          });
+        });
+
+        app.querySelector('#addDoctor')?.addEventListener('click', () => {
+          openDialog('Add Doctor', `
+            <label>Doctor name<input name="name" required maxlength="100" placeholder="e.g. Hana Bekele" /></label>
+            <label>Specialty<input name="specialty" required maxlength="80" placeholder="e.g. General Medicine" /></label>
+          `, values => {
+            const name = String(values.name || '').trim();
+            const specialty = String(values.specialty || '').trim();
+            const doctorName = doctorDisplayName(name);
+            if (!name || !specialty) {
+              showToast('Enter the doctor name and specialty.', true);
+              return false;
+            }
+            if (doctors.some(doctor => doctor.toLowerCase() === doctorName.toLowerCase())) {
+              showToast(`${doctorName} is already on the doctor list.`, true);
+              return false;
+            }
+
+            doctors.push(doctorName);
+            staff.push({ name: doctorName, role: `Doctor · ${specialty}`, status: 'Available' });
+            renderDashboard();
+            showToast(`${doctorName} added and available for patient assignments.`);
+          });
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+          demoMode = false;
+          renderWelcome();
+        });
+      }
+
+      demoMode = true;
+      renderDashboard();
+    </script>
+>>>>>>> 32f5318cdff4a74bf04a36a8c71e3f6b99b917e4
   </body>
 </html>
