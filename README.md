@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-﻿# MAU Clinic Management System
+# MAU Clinic Management System
 
 A responsive clinic management application for Mekdela Amba University. The web client uses React, Vite, Tailwind CSS, and React Router; the REST API uses Express, Mongoose, MongoDB Atlas, JWT, and bcrypt.
 
@@ -47,6 +46,3 @@ cd backend && npm run db:setup
 ```
 
 See [docs/PROJECT_PROPOSAL.md](docs/PROJECT_PROPOSAL.md), [docs/SRS.md](docs/SRS.md), and [docs/DATABASE_DESIGN.md](docs/DATABASE_DESIGN.md) for scope, requirements, data model, and API contracts. Do not enter real patient information until security, privacy, backups, retention, and operational procedures are approved for MAU.
-=======
-# mau-clinic-system
->>>>>>> 32f5318cdff4a74bf04a36a8c71e3f6b99b917e4
